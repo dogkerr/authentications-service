@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   UserRegistrationReqBodyDTO,
   UserRegistrationResDTO,
@@ -22,6 +22,17 @@ export class UsersController {
     return {
       message: 'User registered successfully',
       data: resultData,
+    };
+  }
+
+  @Get(':id')
+  public async restGetUserById(
+    @Param() param: GetUserReqDto,
+  ): Promise<SuccessResponse<GetUserResDto>> {
+    const user = await this.usersService.getUserById(param);
+    return {
+      message: 'User retrieved successfully',
+      data: user,
     };
   }
 
